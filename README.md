@@ -1,5 +1,5 @@
 # Lightweight Analytics at Scale: Hands-On with DuckDB & Smallpond in Python
-### Presentation: [{ YOUR PRESENTATION NAME }](workshop/presentation_template.pdf)
+### Presentation: [{ Lightweight Analytics at Scale }](https://docs.google.com/presentation/d/1TlSVhr38GAzcTDBF_E6ZHnH1pU-pbHTr1R47ZMn5AN8)
 
 ## Workshop description
 In this workshop, you’ll learn how to build powerful yet lightweight data workflows using Python, DuckDB, and Smallpond. We’ll explore how DuckDB enables fast, in-process SQL analytics on massive datasets without heavy infrastructure, and how Smallpond extends those capabilities into distributed, collaborative, or cloud-friendly environments.
@@ -12,8 +12,8 @@ In this workshop, you’ll learn how to build powerful yet lightweight data work
 ### with uv
 Run the following code:
 ```bash
-git clone <github-url-of-workshop-repo>
-cd <name-of-repo>
+git clone git@github.com:valerybriz/lightweight-analytics-duckdb-smallpond-oct2025.git
+cd lightweight-analytics-duckdb-smallpond-oct2025
 
 # create and activate venv, install dependencies
 uv sync
@@ -25,8 +25,8 @@ uv sync
 4. Select one of the notebooks within the repo.
 5. At the top of the notebook, add a Code cell and run the following code:
 ```bash
-!git clone <github-url-of-workshop-repo>
-%cd <name-of-repo>
+!git clone git@github.com:valerybriz/lightweight-analytics-duckdb-smallpond-oct2025.git
+%cd lightweight-analytics-duckdb-smallpond-oct2025
 !pip install -r requirements.txt
 ```
 ### for a workshop giver

@@ -1,0 +1,81 @@
+services:
+  # -------------------------------
+  # MinIO server (S3-compatible)
+  # -------------------------------
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"   # S3 API
+      - "9001:9001"   # MinIO Console
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - ./minio_data:/data
+
+  # -------------------------------
+  # Ray head node
+  # -------------------------------
+  ray-head:
+    build: Ray
+    container_name: ray-head
+    command: >
+      bash -c "ray start --head --port=6379 --ray-client-server-port=10001 --dashboard-host=0.0.0.0 &&
+               tail -f /dev/null"
+
+    ports:
+      - "8265:8265"   # Ray dashboard
+      - "6379:6379"   # Ray head port (Redis)
+      - "10001:10001" # Ray gRPC port for client connections
+    environment:
+      - RAY_HEAD_SERVICE_HOST=ray-head
+      - MINIO_ENDPOINT=http://minio:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+      - SMALLPOND_DISABLE_NUMA=1
+      - SMALLPOND_DISABLE_GPU_DISCOVERY=1
+    volumes:
+      - ./data:/home/ray/data
+    depends_on:
+      - minio
+
+  # -------------------------------
+  # Ray worker nodes
+  # -------------------------------
+  ray-worker-1:
+    build: Ray
+    container_name: ray-worker-1
+    command: >
+      bash -c "ray start --address='ray-head:6379' &&
+               tail -f /dev/null"
+
+    depends_on:
+      - ray-head
+    environment:
+      - MINIO_ENDPOINT=http://minio:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+      - SMALLPOND_DISABLE_NUMA=1
+      - SMALLPOND_DISABLE_GPU_DISCOVERY=1
+    volumes:
+      - ./data:/home/ray/data
+
+  ray-worker-2:
+    build: Ray
+    container_name: ray-worker-2
+    command: >
+      bash -c "ray start --address='ray-head:6379' &&
+               tail -f /dev/null" 
+
+    depends_on:
+      - ray-head
+    environment:
+      - MINIO_ENDPOINT=http://minio:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+      - SMALLPOND_DISABLE_NUMA=1
+      - SMALLPOND_DISABLE_GPU_DISCOVERY=1
+    volumes:
+      - ./data:/home/ray/data
