@@ -7,12 +7,13 @@ In this workshop, you’ll learn how to build powerful yet lightweight data work
 ## Requirements
 * PyLadies Amsterdam uses [uv](https://docs.astral.sh/uv/) for dependency management
 * Google account if you want to use [Google Colab](https://colab.research.google.com/)
+* [Docker desktop](https://docs.docker.com/desktop/) or Docker + Docker compose 
  
 ## Usage
 ### with uv
 Run the following code:
 ```bash
-git clone git@github.com:valerybriz/lightweight-analytics-duckdb-smallpond-oct2025.git
+git clone https://github.com/pyladiesams/lightweight-analytics-duckdb-smallpond-oct2025.git
 cd lightweight-analytics-duckdb-smallpond-oct2025
 
 # create and activate venv, install dependencies
@@ -25,7 +26,7 @@ uv sync
 4. Select one of the notebooks within the repo.
 5. At the top of the notebook, add a Code cell and run the following code:
 ```bash
-!git clone git@github.com:valerybriz/lightweight-analytics-duckdb-smallpond-oct2025.git
+!git clone https://github.com/pyladiesams/lightweight-analytics-duckdb-smallpond-oct2025.git
 %cd lightweight-analytics-duckdb-smallpond-oct2025
 !pip install -r requirements.txt
 ```
