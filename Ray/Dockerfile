@@ -16,4 +16,6 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 EXPOSE 6379 8265 10001
 
+# Double check that we have write access to the shared data folder
+# ENTRYPOINT ["sh", "-c", "echo 'Checking shared volume...' && echo 'test' > data/test.txt"]
 CMD ["bash"]
